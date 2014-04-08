@@ -289,7 +289,7 @@ Curl_ssl_connect_nonblocking(struct connectdata *conn, int sockindex,
   CURLcode res;
   /* mark this is being ssl requested from here on. */
   conn->ssl[sockindex].use = TRUE;
-#ifdef curlssl_connect_nonblocking
+#if defined(curlssl_connect_nonblocking) && !defined(SSL_FORCE_BLOCKING_CONNECT)
   res = curlssl_connect_nonblocking(conn, sockindex, done);
 #else
   *done = TRUE; /* fallback to BLOCKING */
